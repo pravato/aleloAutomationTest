@@ -6,22 +6,27 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.concurrent.TimeUnit;
 
 public class Web {
-    public static WebDriver createBrowser(){
-        String driverPath = "C:\\webdriver\\"; //Pasta onde está localizado o ChromeDrive
 
-        //Chrome
-        System.setProperty("webdriver.chrome.driver", driverPath+"chromedriver.exe"); //Chamando o Chrome
-        WebDriver navegador = new ChromeDriver(); //Instanciando o Chrome
+    private final static String url = "https://www.google.com.br/";
+    private static WebDriver navegador;
 
-        navegador.manage().window().maximize(); //Maximizando o browser
-        navegador.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); //Criando um timeout de 5 segundos a cada ação, para evitar quebras
+    public static WebDriver  createBrowser(){
 
-        //Definindo a página  que será aberta pelo WebDriver: Google
-        String url = "https://www.google.com";
+        String driverPath = "C:\\webdriver\\";
 
-        //Navegador acessa a página do Google (definida acima)
+        System.setProperty("webdriver.chrome.driver", driverPath+"chromedriver.exe");
+        navegador = new ChromeDriver();
+        navegador.manage().window().maximize();
+        navegador.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
         navegador.get(url);
 
+        return navegador;
+    }
+
+    public static WebDriver refreshBrowser(){
+
+        navegador.get(url);
         return navegador;
     }
 

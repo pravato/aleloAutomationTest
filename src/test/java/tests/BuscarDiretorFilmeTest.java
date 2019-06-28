@@ -1,40 +1,41 @@
 package tests;
 
+import model.Film;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import pages.GooglePage;
 import pages.MarioMovies;
 import support.Web;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
-import static org.junit.Assert.*;
-
 public class BuscarDiretorFilmeTest extends MarioMovies{
+
     private WebDriver navegador;
+    private GooglePage googlePage;
 
     @Before
     public void setUp() {
+
         navegador = Web.createBrowser();
+        googlePage = new GooglePage(navegador);
     }
 
     @Test
     public void testBuscarDiretorFilmeGoogle(){
-        new GooglePage(navegador)
-            .informarDados("Peter Jackson O Senhor dos Anéis")
-            .buscarDados()
-            .pegarResultado();
-
+        for (Film film : MarioMovies.films){
+            String searchResult = googlePage
+                    .informarDados(film)
+                    .pegarResultado();
+            System.out.println(searchResult);
+            Web.refreshBrowser();
+        }
     }
+
     @After
     public void tearDown(){
-        //Fechar o navegador
-       // navegador.quit();
+
+    navegador.quit();
 
     }
 
